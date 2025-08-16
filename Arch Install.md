@@ -238,8 +238,3 @@ sudo pacman -S steam lutris mangohud gamemode wine winetricks vulkan-tools gvfs 
 ```
 Sudo pacman -S zsh 
 ```
-
-ZSH framework for plugins and themes (optional)
-```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
