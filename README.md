@@ -1,2 +1,1 @@
-# arch
-My personal arch documentation 
+# My personal arch documentation and cheatsheets
