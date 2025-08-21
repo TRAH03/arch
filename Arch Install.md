@@ -35,7 +35,7 @@ When you select `g` it creates a new GPT parition table that will wipe the previ
 
 You can also create a swap parition for hibernation and to help with system stability expecially if you have less than 16GB of RAM now or you can skip this and create a swapfile after install
 
-example partition layout for a 512M EFI partition and using the rest of the drive for the OS. 
+Here is an example partition layout for a 512MB EFI partition and using the rest of the drive for the OS. 
 
 ```
 # Inside fdisk
@@ -51,11 +51,13 @@ n        # New partition (root)
 
 w        # Write changes
 ```
-the w makes it permanent
+The w makes it permanent
 
 OR you can put /home in a seperate partition so when you reinstall the OS or distro hop your home folder will remain intact
 
-Here is an example layout with 50GB for the OS and the rest of the disk for /home
+Here is an example layout with 512MB for the bootloader, 50GB for the OS and the rest of the disk for /home.
+
+If your reusing your old /home partition and don't want to wipe it don't create the GPT partition table as it will wipe all current paritions. Check your current partitions with `lsblk`. 
 ```
 # Inside fdisk:
 g              # create new GPT partition table
@@ -124,9 +126,14 @@ arch-chroot /mnt
 ```
 
 ## Set the time and locale
+check your timezone
+```
+timedatectl list-timezones
+```
 ```
 ln -sf /usr/share/zoneinfo/_Region_/_City_ /etc/localtime
 ```
+for me it's America/Winnipeg
 ```
 hwclock --systohc
 ```
@@ -207,6 +214,7 @@ make sure to regenerate your grub config
 ```
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
+the grub config may also be in `/efi/grub/grub.cfg` if you used archinstall instead of grub-install
 ## Add windows to grub menu if dual booting
 edit grub config
 ```
@@ -261,7 +269,7 @@ quiet splash
 ```
 example boot param
 ```
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia-drm.modeset=1 quiet splash"
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 nvidia-drm.modeset=1 quiet splash"
 ```
 make sure to regenerate your grub config anytime you make changes to it
 ```
@@ -279,7 +287,7 @@ sudo systemctl enable sddm
 ```
 Then reboot
 ## Gnome Desktop
-Very mac like, uses GTK for apps which is more common
+Very mac like, uses GTK for apps which are more common
 ```
 sudo pacman -S gnome
 ```
@@ -295,7 +303,7 @@ then reboot
 ## Post Install Packages
 these can also be included in the pacstrap command but aren’t necessary for first boot
 ```
-sudo pacman -S base-devel unzip zip p7zip tar htop man-db man-pages usbutils pciutils ethtool fastfetch git curl wget pipewire pipewire-alsa pipewire-pulse pipeware-jack wireplumber
+sudo pacman -S unzip zip p7zip htop man-db man-pages usbutils pciutils ethtool fastfetch git curl wget pipewire pipewire-alsa pipewire-pulse pipeware-jack wireplumber
 ```
 
 ## Flatpak
@@ -311,9 +319,12 @@ for apps like Spotify, Discord, Chrome, VLC, Bitwarden, Obsidian, prism launcher
 You can browse these apps with the discover store or install with the terminal. Updates are managed by the store GUI or terminal.
 ## AUR
 you can find just about anything here but all the packages are unofficially maintained by the community so grab a flatpak or pacman package if available
+
+if you didn't grab them before
 ```
-sudo pacman -S --needed base-devel git    #if you didn't grab them before
+sudo pacman -S --needed base-devel git    
 ```
+Downloads yay to your home folder
 ```
 git clone https://aur.archlinux.org/yay.git
 ```
@@ -344,7 +355,7 @@ sudo systemctl start bluetooth
 
 ## Gaming Packages
 ```
-sudo pacman -S steam lutris mangohud gamemode wine winetricks vulkan-tools gvfs lib32-gamemode lib32-gnutls lib32-vkd3d vkd3d
+sudo pacman -S steam lutris mangohud gamemode wine winetricks vulkan-tools lib32-gamemode lib32-gnutls lib32-vkd3d vkd3d
 ```
 
 ## Optional Packages
