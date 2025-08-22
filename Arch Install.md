@@ -108,7 +108,7 @@ mount /dev/nvme0n1p1 /mnt/boot
 ```
 
 ### Pacstrap Install Packages.
-This is the OS, plus some stuff that you need.
+This is the OS, plus some stuff that you need. you can add more to this commad if you want.
 
 ```
 pacstrap -K /mnt base linux linux-firmware linux-headers networkmanager nano vim dosfstools exfatprogs ntfs-3g grub os-prober tzdata efibootmgr sudo 
@@ -126,17 +126,19 @@ arch-chroot /mnt
 ```
 
 ## Set the time and locale
-check your timezone
+List timezones
 ```
 timedatectl list-timezones
 ```
+Set the timezone, for me it's America/Winnipeg
 ```
 ln -sf /usr/share/zoneinfo/_Region_/_City_ /etc/localtime
 ```
-for me it's America/Winnipeg
+set hardware clock
 ```
 hwclock --systohc
 ```
+generate locales
 ```
 locale-gen
 ```
